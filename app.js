@@ -12,17 +12,26 @@ app.get('/quotes', async (req, res)=>{
 });
 //Send a GET request to /quotes/:id to READ(view) a quote
 app.get('/quotes/:id', async (req, res)=>{
-    const quote = await records.getQuote(req.params.id);
-    res.json(quote);
+    try{
+        const quote = await records.getQuote(req.params.id);
+        res.json(quote);
+    } catch (err){
+        res.json({message: err.message});
+    }
+    
 });
 
 //Send a POST request to /quotes/ CREATE a quote
 app.post('/quotes', async (req, res)=>{
-    const quote = await records.createQuote({
-        quote:req.body.quote,
-        author: req.body.author
-    });
-    res.json(quote);
+    try{
+        const quote = await records.createQuote({
+            quote:req.body.quote,
+            author: req.body.author
+        });
+        res.json(quote);
+    } catch (err){
+        res.json({message: err.message})
+    }
 });
 //Send a PUT request to /quotes/:id UPDATE(edit) a quote
 //Send a DELTE request to /quotes/:id DELETE a quote
